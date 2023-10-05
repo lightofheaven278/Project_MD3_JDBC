@@ -8,6 +8,19 @@ import java.util.List;
 import java.util.Scanner;
 
 public class EmployeeManagement {
+    /**
+     * Text color
+     */
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+
+    /**
+     * Bold format
+     */
+    public static final String PURPLE_BOLD = "\033[1;35m"; // PURPLE
+
     public static Scanner input = new Scanner(System.in);
     public static List<Employee> originalEmployeeList = EmployeeBusiness.getAllEmployeesInfo();
 
@@ -15,7 +28,8 @@ public class EmployeeManagement {
         boolean checkOutEmployee = true;
         do {
             originalEmployeeList = EmployeeBusiness.getAllEmployeesInfo();
-            System.out.println("-----------------------EMPLOYEE MANAGEMENT----------------------");
+            System.out.println("-----------------------" + PURPLE_BOLD + "EMPLOYEE MANAGEMENT" + ANSI_RESET +
+                    "----------------------");
             System.out.println("1. Display employee info(displayed data less than 10)");
             System.out.println("2. Add new employee");
             System.out.println("3. Update employee info");
@@ -65,9 +79,21 @@ public class EmployeeManagement {
                 System.out.println("Please input starting data:");
                 int startData = Integer.parseInt(input.nextLine());
                 List<Employee> employeeList = EmployeeBusiness.getEmployeesInfo(dataPerPage, startData);
-                System.out.printf("%-15s%-25s%-25s%-25s%-20s%-25s%-20s\n", "Employee ID", "Employee Name", "Birthday",
-                        "Email", "Phone", "Address", "Employee Status");
+                System.out.print("--------------------------------------------------------------------------------" +
+                        "-----------------------------------------------------------------------------------------" +
+                        "--------\n");
+                System.out.printf("| " + PURPLE_BOLD + "%-15s" + ANSI_RESET +
+                                " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
+                                " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
+                                " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
+                                " | " + PURPLE_BOLD + "%-20s" + ANSI_RESET +
+                                " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
+                                " | " + PURPLE_BOLD + "%-20s" + ANSI_RESET + " |\n",
+                        "Employee ID", "Employee Name", "Birthday", "Email", "Phone", "Address", "Employee Status");
                 employeeList.stream().forEach(employee -> employee.displayData());
+                System.out.print("--------------------------------------------------------------------------------" +
+                        "-----------------------------------------------------------------------------------------" +
+                        "--------\n");
                 int remainingProducts = originalEmployeeList.size() - (dataPerPage + startData);
                 System.out.print("The remaining employees is: ");
                 System.out.println(remainingProducts);
@@ -123,7 +149,8 @@ public class EmployeeManagement {
         String employeeId = input.nextLine();
         Employee employee = EmployeeBusiness.getEmployeeById(employeeId);
         if (employee != null) {
-            System.out.println("------------------Product Status Menu--------------------");
+            System.out.println("------------------" + ANSI_GREEN + "Product Status Menu" + ANSI_RESET +
+                    "--------------------");
             System.out.println("0. Active");
             System.out.println("1. Paid leave");
             System.out.println("2. Resign");
@@ -160,9 +187,21 @@ public class EmployeeManagement {
         String employeeName = input.nextLine();
         List<Employee> employeeListSearch = EmployeeBusiness.searchEmployee(employeeName);
         if (employeeListSearch.size() != 0) {
-            System.out.printf("%-15s%-25s%-25s%-25s%-20s%-25s%-20s\n", "Employee ID", "Employee Name", "Birthday",
-                    "Email", "Phone", "Address", "Employee Status");
+            System.out.print("--------------------------------------------------------------------------------" +
+                    "-----------------------------------------------------------------------------------------" +
+                    "--------\n");
+            System.out.printf("| " + PURPLE_BOLD + "%-15s" + ANSI_RESET +
+                            " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
+                            " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
+                            " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
+                            " | " + PURPLE_BOLD + "%-20s" + ANSI_RESET +
+                            " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
+                            " | " + PURPLE_BOLD + "%-20s" + ANSI_RESET + " |\n",
+                    "Employee ID", "Employee Name", "Birthday", "Email", "Phone", "Address", "Employee Status");
             employeeListSearch.stream().forEach(Employee::displayData);
+            System.out.print("--------------------------------------------------------------------------------" +
+                    "-----------------------------------------------------------------------------------------" +
+                    "--------\n");
         } else {
             System.err.println("The inputted name does not exist!");
         }

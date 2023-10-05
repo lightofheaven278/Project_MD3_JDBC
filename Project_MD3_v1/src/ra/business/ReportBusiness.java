@@ -7,6 +7,20 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 
 public class ReportBusiness {
+    /**
+     * Text color
+     */
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+
+    /**
+     * Bold format
+     */
+    public static final String PURPLE_BOLD = "\033[1;35m"; // PURPLE
+
     public static void statisticsOfExpenses() {
         Connection con = null;
         CallableStatement callSt = null;
@@ -14,12 +28,17 @@ public class ReportBusiness {
             con = ConnectionDB.openConnection();
             callSt = con.prepareCall("{call statistics_expenses_by_date_time()}");
             ResultSet rs = callSt.executeQuery();
-            System.out.printf("%-25s%-20s\n", "Authorized Date", "Expenses");
+            System.out.print("----------------------------------------------------\n");
+            System.out.printf("| " + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | " +
+                            ANSI_PURPLE + "%-20s" + ANSI_RESET + " |\n",
+                    "Authorized Date", "Expenses");
             while (rs.next()) {
+                System.out.print("----------------------------------------------------\n");
                 String date = rs.getString("auth_date");
                 float expenses = rs.getFloat("Expenses");
-                System.out.printf("%-25s%-20.1f\n", date, expenses);
+                System.out.printf("| %-25s | %-20.1f |\n", date, expenses);
             }
+            System.out.print("----------------------------------------------------\n");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -36,12 +55,17 @@ public class ReportBusiness {
             callSt.setString(1, date_in);
             callSt.setString(2, date_out);
             ResultSet rs = callSt.executeQuery();
-            System.out.printf("%-25s%-20s\n", "Authorized Date", "Expenses");
+            System.out.print("----------------------------------------------------\n");
+            System.out.printf("| " + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | " +
+                            ANSI_PURPLE + "%-20s" + ANSI_RESET + " |\n",
+                    "Authorized Date", "Expenses");
             while (rs.next()) {
+                System.out.print("----------------------------------------------------\n");
                 String date = rs.getString("auth_date");
                 float expenses = rs.getFloat("Expenses");
-                System.out.printf("%-25s%-20.1f\n", date, expenses);
+                System.out.printf("| %-25s | %-20.1f |\n", date, expenses);
             }
+            System.out.print("----------------------------------------------------\n");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -56,12 +80,17 @@ public class ReportBusiness {
             con = ConnectionDB.openConnection();
             callSt = con.prepareCall("{call statistics_revenue_by_date_time()}");
             ResultSet rs = callSt.executeQuery();
-            System.out.printf("%-25s%-20s\n", "Authorized Date", "Revenue");
+            System.out.print("----------------------------------------------------\n");
+            System.out.printf("| " + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | " +
+                            ANSI_PURPLE + "%-20s" + ANSI_RESET + " |\n",
+                    "Authorized Date", "Revenue");
             while (rs.next()) {
+                System.out.print("----------------------------------------------------\n");
                 String date = rs.getString("auth_date");
                 float revenue = rs.getFloat("revenue");
-                System.out.printf("%-25s%-20.1f\n", date, revenue);
+                System.out.printf("| %-25s | %-20.1f |\n", date, revenue);
             }
+            System.out.print("----------------------------------------------------\n");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -78,12 +107,17 @@ public class ReportBusiness {
             callSt.setString(1, date_in);
             callSt.setString(2, date_out);
             ResultSet rs = callSt.executeQuery();
-            System.out.printf("%-25s%-20s\n", "Authorized Date", "Revenue");
+            System.out.print("----------------------------------------------------\n");
+            System.out.printf("| " + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | " +
+                            ANSI_PURPLE + "%-20s" + ANSI_RESET + " |\n",
+                    "Authorized Date", "Revenue");
             while (rs.next()) {
+                System.out.print("----------------------------------------------------\n");
                 String date = rs.getString("auth_date");
                 float expenses = rs.getFloat("revenue");
-                System.out.printf("%-25s%-20.1f\n", date, expenses);
+                System.out.printf("| %-25s | %-20.1f |\n", date, expenses);
             }
+            System.out.print("----------------------------------------------------\n");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -98,8 +132,12 @@ public class ReportBusiness {
             con = ConnectionDB.openConnection();
             callSt = con.prepareCall("{call statistics_number_of_emp_by_status()}");
             ResultSet rs = callSt.executeQuery();
-            System.out.printf("%-25s%-25s\n", "Employee Status", "Number Of Employee");
+            System.out.print("---------------------------------------------------------\n");
+            System.out.printf("| " + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | " +
+                            ANSI_PURPLE + "%-25s" + ANSI_RESET + " |\n",
+                    "Employee Status", "Number Of Employee");
             while (rs.next()) {
+                System.out.print("---------------------------------------------------------\n");
                 String statusStr = "";
                 int status = rs.getInt("emp_status");
                 if (status == 0) {
@@ -110,8 +148,9 @@ public class ReportBusiness {
                     statusStr = "Resign";
                 }
                 int numberOfEmp = rs.getInt("NumberOfEmp");
-                System.out.printf("%-25s%-25d\n", statusStr, numberOfEmp);
+                System.out.printf("| %-25s | %-25d |\n", statusStr, numberOfEmp);
             }
+            System.out.print("---------------------------------------------------------\n");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -128,12 +167,17 @@ public class ReportBusiness {
             callSt.setString(1, date_in);
             callSt.setString(2, date_out);
             ResultSet rs = callSt.executeQuery();
-            System.out.printf("%-25s%-25s\n", "Product Name", "Import Quantity");
+            System.out.print("---------------------------------------------------------\n");
+            System.out.printf("| " + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | " +
+                            ANSI_PURPLE + "%-25s" + ANSI_RESET + " |\n",
+                    "Product Name", "Import Quantity");
             while (rs.next()) {
+                System.out.print("---------------------------------------------------------\n");
                 String productName = rs.getString("product_name");
                 int importQuantity = rs.getInt("total_quantity");
-                System.out.printf("%-25S%-25d\n", productName, importQuantity);
+                System.out.printf("| %-25s | %-25d |\n", productName, importQuantity);
             }
+            System.out.print("---------------------------------------------------------\n");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -150,12 +194,17 @@ public class ReportBusiness {
             callSt.setString(1, date_in);
             callSt.setString(2, date_out);
             ResultSet rs = callSt.executeQuery();
-            System.out.printf("%-25s%-25s\n", "Product Name", "Import Quantity");
+            System.out.print("---------------------------------------------------------\n");
+            System.out.printf("| " + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | " +
+                            ANSI_PURPLE + "%-25s" + ANSI_RESET + " |\n",
+                    "Product Name", "Import Quantity");
             while (rs.next()) {
+                System.out.print("---------------------------------------------------------\n");
                 String productName = rs.getString("product_name");
                 int importQuantity = rs.getInt("total_quantity");
-                System.out.printf("%-25S%-25d\n", productName, importQuantity);
+                System.out.printf("| %-25s | %-25d |\n", productName, importQuantity);
             }
+            System.out.print("---------------------------------------------------------\n");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -172,12 +221,17 @@ public class ReportBusiness {
             callSt.setString(1, date_in);
             callSt.setString(2, date_out);
             ResultSet rs = callSt.executeQuery();
-            System.out.printf("%-25s%-25s\n", "Product Name", "Export Quantity");
+            System.out.print("---------------------------------------------------------\n");
+            System.out.printf("| " + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | " +
+                            ANSI_PURPLE + "%-25s" + ANSI_RESET + " |\n",
+                    "Product Name", "Export Quantity");
             while (rs.next()) {
+                System.out.print("---------------------------------------------------------\n");
                 String productName = rs.getString("product_name");
                 int exportQuantity = rs.getInt("total_quantity");
-                System.out.printf("%-25S%-25d\n", productName, exportQuantity);
+                System.out.printf("| %-25s | %-25d |\n", productName, exportQuantity);
             }
+            System.out.print("---------------------------------------------------------\n");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -194,12 +248,17 @@ public class ReportBusiness {
             callSt.setString(1, date_in);
             callSt.setString(2, date_out);
             ResultSet rs = callSt.executeQuery();
-            System.out.printf("%-25s%-25s\n", "Product Name", "Export Quantity");
+            System.out.print("---------------------------------------------------------\n");
+            System.out.printf("| " + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | " +
+                            ANSI_PURPLE + "%-25s" + ANSI_RESET + " |\n",
+                    "Product Name", "Export Quantity");
             while (rs.next()) {
+                System.out.print("---------------------------------------------------------\n");
                 String productName = rs.getString("product_name");
                 int exportQuantity = rs.getInt("total_quantity");
-                System.out.printf("%-25S%-25d\n", productName, exportQuantity);
+                System.out.printf("| %-25s | %-25d |\n", productName, exportQuantity);
             }
+            System.out.print("---------------------------------------------------------\n");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

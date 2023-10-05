@@ -225,7 +225,9 @@ public class Product {
 
     public void displayData() {
         String status = this.productStatus ? "Active" : "Inactive";
-        System.out.printf("%-15s%-25s%-25s%-20s%-15d%-15d%-20s\n", this.productId, this.productName,
-                this.Manufacturer, this.created, this.batch, this.quantity, status);
+        System.out.print("--------------------------------------------------------------------------------" +
+                "-----------------------------------------------------------------------------\n");
+        System.out.printf("| %-15s | %-25s | %-25s | %-20s | %-15d | %-15d | %-20s |\n", this.productId,
+                this.productName, this.Manufacturer, this.created, this.batch, this.quantity, status);
     }
 }

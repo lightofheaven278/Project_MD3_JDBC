@@ -149,7 +149,9 @@ public class BillDetail {
     }
 
     public void displayData() {
-        System.out.printf("| %-25d | %-20d | %-15s | %-15d | %-15.1f |\n", this.billDetailId, this.billId, this.productId,
-                this.quantity, this.price);
+        System.out.print("-------------------------------------------------------------------------------------" +
+                "---------------------\n");
+        System.out.printf("| %-25d | %-20d | %-15s | %-15d | %-15.1f |\n", this.billDetailId, this.billId,
+                this.productId, this.quantity, this.price);
     }
 }

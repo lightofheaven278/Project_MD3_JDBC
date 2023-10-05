@@ -197,7 +197,9 @@ public class Account {
     public void displayData() {
         String permission = this.permission ? "User" : "Admin";
         String accStatus = this.accStatus ? "Active" : "Block";
-        System.out.printf("%-15d%-25s%-25s%-15s%-15s%-15s\n", this.accId, this.userName, this.password,
-                permission, this.empId, accStatus);
+        System.out.print("--------------------------------------------------------------------------------------" +
+                "-------------------------------------------\n");
+        System.out.printf("| %-15d | %-25s | %-25s | %-15s | %-15s | %-15s |\n", this.accId, this.userName,
+                this.password, permission, this.empId, accStatus);
     }
 }

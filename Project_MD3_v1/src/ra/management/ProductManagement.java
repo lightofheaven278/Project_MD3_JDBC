@@ -7,6 +7,19 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProductManagement {
+    /**
+     * Text color
+     */
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+
+    /**
+     * Bold format
+     */
+    public static final String PURPLE_BOLD = "\033[1;35m"; // PURPLE
+
     public static Scanner input = new Scanner(System.in);
     public static List<Product> originalProductList = ProductBusiness.getOriginalProduct();
 
@@ -14,7 +27,8 @@ public class ProductManagement {
         boolean checkOutProduct = true;
         do {
             originalProductList = ProductBusiness.getOriginalProduct();
-            System.out.println("----------------------PRODUCT MANAGEMENT SYSTEM----------------------");
+            System.out.println("----------------------" + PURPLE_BOLD + "PRODUCT MANAGEMENT SYSTEM" + ANSI_RESET +
+                    "----------------------");
             System.out.println("1. Display product info(number of items less than or equal 10)");
             System.out.println("2. Add new product to list");
             System.out.println("3. Update product info");
@@ -47,10 +61,10 @@ public class ProductManagement {
                         System.err.println("The inputted choice is out of scope(1~6)");
                 }
             } catch (NumberFormatException ex) {
-                System.out.println("The inputted choice does not have an integer format! Please try again! " +
+                System.err.println("The inputted choice does not have an integer format! Please try again! " +
                         ex.getMessage());
             } catch (Exception e) {
-                System.out.println("Some errs occur while inputting choice! " + e.getMessage());
+                System.err.println("Some errs occur while inputting choice! " + e.getMessage());
             }
         } while (checkOutProduct);
 
@@ -65,9 +79,20 @@ public class ProductManagement {
                 System.out.println("Please input starting data:");
                 int startData = Integer.parseInt(input.nextLine());
                 List<Product> productList = ProductBusiness.getAllProduct(dataPerPage, startData);
-                System.out.printf("%-15s%-25s%-25s%-20s%-15s%-15s%-20s\n", "Product ID", "Product Name", "Manufacturer",
-                        "Created Date", "Batch", "Quantity", "Product Status");
+                System.out.print("--------------------------------------------------------------------------------" +
+                        "---------------------------------------------------------------------------\n");
+                System.out.printf("| " + ANSI_PURPLE + "%-15s" + ANSI_RESET +
+                                " | " + ANSI_PURPLE + "%-25s" + ANSI_RESET +
+                                " | " + ANSI_PURPLE + "%-25s" + ANSI_RESET +
+                                " | " + ANSI_PURPLE + "%-20s" + ANSI_RESET +
+                                " | " + ANSI_PURPLE + "%-15s" + ANSI_RESET +
+                                " | " + ANSI_PURPLE + "%-15s" + ANSI_RESET +
+                                " | " + ANSI_PURPLE + "%-20s" + ANSI_RESET + " |\n",
+                        "Product ID", "Product Name", "Manufacturer", "Created Date",
+                        "Batch", "Quantity", "Product Status");
                 productList.stream().forEach(Product::displayData);
+                System.out.print("--------------------------------------------------------------------------------" +
+                        "-----------------------------------------------------------------------------\n");
                 int remainingProducts = originalProductList.size() - (dataPerPage + startData);
                 System.out.print("The remaining products is: ");
                 System.out.println(remainingProducts);
@@ -78,9 +103,11 @@ public class ProductManagement {
                     checkOutDisplay = false;
                 }
             } catch (NumberFormatException ex) {
-                System.err.println("The inputted number does not have an integer format! " + ex.getMessage());
+                System.out.println(ANSI_RED + "The inputted number does not have an integer format! " + ANSI_RESET
+                        + ex.getMessage());
             } catch (Exception e) {
-                System.err.println("Some errs occur while inputting number of choice! " + e.getMessage());
+                System.out.println(ANSI_RED + "Some errs occur while inputting number of choice! " + ANSI_RESET
+                        + e.getMessage());
             }
         } while (checkOutDisplay);
     }
@@ -123,9 +150,20 @@ public class ProductManagement {
         String productName = input.nextLine();
         List<Product> productListSearch = ProductBusiness.searchProductByName(productName);
         if (productListSearch.size() != 0) {
-            System.out.printf("%-15s%-25s%-25s%-20s%-15s%-15s%-20s\n", "Product ID", "Product Name", "Manufacturer",
-                    "Created Date", "Batch", "Quantity", "Product Status");
+            System.out.print("--------------------------------------------------------------------------------" +
+                    "---------------------------------------------------------------------------\n");
+            System.out.printf("| " + ANSI_PURPLE + "%-15s" + ANSI_RESET +
+                            " | " + ANSI_PURPLE + "%-25s" + ANSI_RESET +
+                            " | " + ANSI_PURPLE + "%-25s" + ANSI_RESET +
+                            " | " + ANSI_PURPLE + "%-20s" + ANSI_RESET +
+                            " | " + ANSI_PURPLE + "%-15s" + ANSI_RESET +
+                            " | " + ANSI_PURPLE + "%-15s" + ANSI_RESET +
+                            " | " + ANSI_PURPLE + "%-20s" + ANSI_RESET + " |\n",
+                    "Product ID", "Product Name", "Manufacturer", "Created Date",
+                    "Batch", "Quantity", "Product Status");
             productListSearch.stream().forEach(Product::displayData);
+            System.out.print("--------------------------------------------------------------------------------" +
+                    "---------------------------------------------------------------------------\n");
         } else {
             System.err.println("The inputted name does not exist!");
         }
@@ -136,7 +174,8 @@ public class ProductManagement {
         String productId = input.nextLine();
         Product product = ProductBusiness.getProductById(productId);
         if (product != null) {
-            System.out.println("------------------Product Status Menu--------------------");
+            System.out.println("------------------" + ANSI_GREEN + "Product Status Menu" + ANSI_RESET +
+                    "--------------------");
             System.out.println("1. True  ----> Active");
             System.out.println("2. False ----> Inactive");
             System.out.println("Please choose number representing status of product(1 or 2):");

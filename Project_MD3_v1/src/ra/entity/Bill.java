@@ -6,6 +6,19 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Bill {
+    /**
+     * Text color
+     */
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+
+    /**
+     * Bold format
+     */
+    public static final String PURPLE_BOLD = "\033[1;35m"; // PURPLE
     private int billId;
     private String billCode;
     private boolean billType;
@@ -211,7 +224,8 @@ public class Bill {
 
     public Integer validateBillStatus(Scanner input, String condition) {
         if (condition.equalsIgnoreCase("create")) {
-            System.out.println("----------------Bill/Receipt Status Menu-----------------");
+            System.out.println("----------------" + ANSI_GREEN + "Bill/Receipt Status Menu" + ANSI_RESET +
+                    "-----------------");
             System.out.println("0. Created");
             System.out.println("1. Cancelled");
             System.out.println("2. Authorized");
@@ -227,7 +241,8 @@ public class Bill {
                 }
             } while (true);
         } else {
-            System.out.println("----------------Bill/Receipt Status Menu-----------------");
+            System.out.println("----------------" + ANSI_GREEN + "Bill/Receipt Status Menu" + ANSI_RESET +
+                    "-----------------");
             System.out.println("0. Created");
             System.out.println("1. Cancelled");
             System.out.println("Please choose bill/receipt status:");
@@ -258,7 +273,10 @@ public class Bill {
         } else {
             billStatus = "Authorized";
         }
-        System.out.printf("%-15d%-20s%-15s%-20s%-20s%-20s%-25s%-15s\n", this.billId, this.billCode, billType,
-                this.empIdCreated, this.created, this.empIdAuth, this.authDate, billStatus);
+        System.out.print("-----------------------------------------------------------------------------------------" +
+                "--------------------------------------------------------------------------------------\n");
+        System.out.printf("| %-15d | %-20s | %-15s | %-20s | %-20s | %-20s | %-25s | %-15s |\n",
+                this.billId, this.billCode, billType, this.empIdCreated, this.created, this.empIdAuth,
+                this.authDate, billStatus);
     }
 }

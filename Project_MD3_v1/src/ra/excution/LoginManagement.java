@@ -3,6 +3,7 @@ package ra.excution;
 import ra.business.AccountBusiness;
 
 import ra.entity.Account;
+
 import java.io.*;
 import java.util.Scanner;
 
@@ -51,7 +52,8 @@ public class LoginManagement {
             System.out.println("Some errs occur while inputting choice! " + e.getMessage());
         }
 */
-        System.out.println("------------------------ACCOUNT LOGIN----------------------");
+        System.out.println("------------------------" + PURPLE_BOLD + "ACCOUNT LOGIN" + ANSI_RESET +
+                "----------------------");
         do {
             System.out.println("Please input user name:");
             String userName = input.nextLine();
@@ -68,6 +70,8 @@ public class LoginManagement {
                 if (account.isPermission() && account.isAccStatus() && account.getPassword().trim().equals(password)) {
                     WarehouseManagementForUser.warehouseManagementForUser();
                     return;
+                } else {
+                    System.out.println(ANSI_RED + "The username or password is not correct!" + ANSI_RESET);
                 }
             } else {
                 System.out.println(ANSI_RED + "The inputted username does not exist!" + ANSI_RESET);
@@ -114,8 +118,7 @@ public class LoginManagement {
             try {
                 fis = new FileInputStream(newBookRead);
                 ois = new ObjectInputStream(fis);
-                String userName = (String) ois.readObject();
-                return userName;
+                return (String) ois.readObject();
             } catch (FileNotFoundException ex1) {
                 System.err.println("Cannot find the file!");
             } catch (IOException ex2) {

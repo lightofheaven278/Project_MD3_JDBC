@@ -7,12 +7,26 @@ import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class ReportManagement {
+    /**
+     * Text color
+     */
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+
+    /**
+     * Bold format
+     */
+    public static final String PURPLE_BOLD = "\033[1;35m"; // PURPLE
+
     public static Scanner input = new Scanner(System.in);
 
     public static void reportManagementMenu() {
         boolean checkOutReport = true;
         do {
-            System.out.println("-----------------------REPORT MANAGEMENT-----------------------");
+            System.out.println("-----------------------" + PURPLE_BOLD + "REPORT MANAGEMENT" + ANSI_RESET +
+                    "-----------------------");
             System.out.println("1. Statistics of expenses by day, month, year");
             System.out.println("2. Statistics of expenses within time interval");
             System.out.println("3. Statistics of revenue by day, month, year");

@@ -61,10 +61,10 @@ public class WarehouseManagementForAdmin {
                         System.err.println("The inputted choice is out of scope(1~7)");
                 }
             } catch (NumberFormatException ex) {
-                System.out.println("The inputted choice does not have an integer format! Please try again! " +
+                System.err.println("The inputted choice does not have an integer format! Please try again! " +
                         ex.getMessage());
             } catch (Exception e) {
-                System.out.println("Some errs occur while inputting choice! " + e.getMessage());
+                System.err.println("Some errs occur while inputting choice! " + e.getMessage());
             }
         } while (checkOutForAdmin);
 

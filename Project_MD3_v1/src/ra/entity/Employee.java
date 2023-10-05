@@ -6,6 +6,19 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Employee {
+    /**
+     * Text color
+     */
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+
+    /**
+     * Bold format
+     */
+    public static final String PURPLE_BOLD = "\033[1;35m"; // PURPLE
+
     private String empId;
     private String empName;
     private String birthday;
@@ -219,7 +232,7 @@ public class Employee {
     }
 
     public Integer validateEmpStatus(Scanner input) {
-        System.out.println("----------------Status Menu-----------------");
+        System.out.println("----------------" + ANSI_GREEN + "Status Menu" + ANSI_RESET + "-----------------");
         System.out.println("0. Active");
         System.out.println("1. Paid Leave");
         System.out.println("2. Resigned");
@@ -245,7 +258,10 @@ public class Employee {
         } else {
             status = "Resigned";
         }
-        System.out.printf("%-15s%-25s%-25s%-25s%-20s%-25s%-20s\n", this.empId, this.empName, this.birthday,
+        System.out.print("--------------------------------------------------------------------------------" +
+                "-----------------------------------------------------------------------------------------" +
+                "--------\n");
+        System.out.printf("| %-15s | %-25s | %-25s | %-25s | %-20s | %-25s | %-20s |\n", this.empId, this.empName, this.birthday,
                 this.email, this.phoneNum, this.address, status);
     }
 }

@@ -76,17 +76,40 @@ public class WarehouseManagementForUser {
     public static void displayAllReceiptByStatus() {
         String userName = LoginManagement.readUserNameFromFile();
         List<Bill> receiptList = UserBusiness.getAllReceiptByStatus(userName);
-        System.out.printf("%-15s%-20s%-15s%-20s%-20s%-20s%-25s%-15s\n", "Receipt ID", "Receipt Code", "Type",
-                "Created Employee", "Created Date", "Authorized Employee", "Authorized Date", "Receipt Status");
+        System.out.print("-----------------------------------------------------------------------------------------" +
+                "--------------------------------------------------------------------------------------\n");
+        System.out.printf("| " + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-15s" + ANSI_RESET + " |\n",
+                "Receipt ID", "Receipt Code", "Type", "Created Employee", "Created Date", "Authorized Employee",
+                "Authorized Date", "Receipt Status");
         receiptList.stream().forEach(Bill::displayData);
+        System.out.print("-----------------------------------------------------------------------------------------" +
+                "--------------------------------------------------------------------------------------\n");
     }
 
     public static void displayAllBillsByStatus() {
         String userName = LoginManagement.readUserNameFromFile();
         List<Bill> billList = UserBusiness.getAllBillByStatus(userName);
-        System.out.printf("%-15s%-20s%-15s%-20s%-20s%-20s%-25s%-15s\n", "Receipt ID", "Receipt Code", "Type",
-                "Created Employee", "Created Date", "Authorized Employee", "Authorized Date", "Receipt Status");
+        System.out.print("-----------------------------------------------------------------------------------------" +
+                "--------------------------------------------------------------------------------------\n");
+        System.out.printf("| " + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-15s" + ANSI_RESET + " |\n", "Bill ID", "Bill Code", "Bill Type",
+                "Created Employee", "Created Date", "Authorized Employee", "Authorized Date", "Bill Status");
         billList.stream().forEach(Bill::displayData);
+        System.out.print("-----------------------------------------------------------------------------------------" +
+                "--------------------------------------------------------------------------------------\n");
     }
 
     public static void updateReceiptByUser(String userName) {
@@ -123,7 +146,7 @@ public class WarehouseManagementForUser {
             if (receipt.isBillStatus() != 2) {
                 // update receipt info
                 List<Employee> employeeList = EmployeeBusiness.getAllEmployeesInfo();
-                System.out.println("--------------Employee List-------------");
+                System.out.println("--------------" + ANSI_GREEN + "Employee List" + ANSI_RESET + "-------------");
                 for (int i = 0; i < employeeList.size(); i++) {
                     System.out.println((i + 1) + ". " + employeeList.get(i).getEmpName());
                 }
@@ -164,6 +187,8 @@ public class WarehouseManagementForUser {
         List<BillDetail> receiptDetailListUpdate = ReceiptBusiness.getReceiptDetailByReceiptId(receiptId);
         if (receiptDetailListUpdate.size() != 0) {
             // display all receipt detail by receipt ID
+            System.out.print("-------------------------------------------------------------------------------------" +
+                    "---------------------\n");
             System.out.printf("| " + PURPLE_BOLD + "%-25s" + ANSI_RESET + " | "
                             + PURPLE_BOLD + "%-20s" + ANSI_RESET + " | "
                             + PURPLE_BOLD + "%-15s" + ANSI_RESET + " | "
@@ -171,14 +196,16 @@ public class WarehouseManagementForUser {
                             + PURPLE_BOLD + "%-15s" + ANSI_RESET + " |\n",
                     "Bill Detail ID", "Bill ID", "Product ID", "Quantity", "Price");
             receiptDetailListUpdate.stream().forEach(BillDetail::displayData);
+            System.out.print("-------------------------------------------------------------------------------------" +
+                    "---------------------\n");
             // update each receipt detail
             int countReceiptDetail = 1;
             for (BillDetail receiptDetail : receiptDetailListUpdate) {
-                System.out.println("-----------------Update Receipt Detail Number " + countReceiptDetail +
-                        "------------------");
+                System.out.println("-----------------" + ANSI_GREEN + "Update Receipt Detail Number " + ANSI_RESET
+                        + ANSI_PURPLE + countReceiptDetail + ANSI_RESET + "------------------");
                 // get product list to update product ID
                 List<Product> productList = ProductBusiness.getOriginalProduct();
-                System.out.println("------------Product List-----------");
+                System.out.println("------------" + ANSI_GREEN + "Product List" + ANSI_RESET + "-----------");
                 for (int i = 0; i < productList.size(); i++) {
                     System.out.println((i + 1) + ". " + productList.get(i).getProductName());
                 }
@@ -208,8 +235,19 @@ public class WarehouseManagementForUser {
             int receiptId = Integer.parseInt(input.nextLine());
             List<Bill> searchReceiptList = UserBusiness.searchReceiptForUser(receiptId);
             if (searchReceiptList.size() != 0) {
-                System.out.printf("%-15s%-20s%-15s%-20s%-20s%-20s%-25s%-15s\n", "Receipt ID", "Receipt Code", "Type",
-                        "Created Employee", "Created Date", "Authorized Employee", "Authorized Date", "Receipt Status");
+                System.out.print("---------------------------------------------------------------------------------" +
+                        "------------------------------------------------------------------------------------------" +
+                        "----\n");
+                System.out.printf("| " + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-15s" + ANSI_RESET + " |\n",
+                        "Receipt ID", "Receipt Code", "Type", "Created Employee", "Created Date",
+                        "Authorized Employee", "Authorized Date", "Receipt Status");
                 searchReceiptList.stream().forEach(Bill::displayData);
             } else {
                 System.err.println("There is no receipt whose ID matches with the inputted data!");
@@ -257,7 +295,7 @@ public class WarehouseManagementForUser {
                 // update receipt info
                 List<Employee> employeeList = EmployeeBusiness.getAllEmployeesInfo();
                 // print employee name
-                System.out.println("--------------Employee List-------------");
+                System.out.println("--------------" + ANSI_GREEN + "Employee List" + ANSI_RESET + "-------------");
                 for (int i = 0; i < employeeList.size(); i++) {
                     System.out.println((i + 1) + ". " + employeeList.get(i).getEmpName());
                 }
@@ -294,17 +332,25 @@ public class WarehouseManagementForUser {
         List<BillDetail> billDetailListUpdate = BillBusiness.getBillDetailByBillId(billId);
         if (billDetailListUpdate.size() != 0) {
             // display all receipt detail by receipt ID
-            System.out.printf("%-25s%-20s%-15s%-15s%-15s\n", "Bill Detail ID", "Bill ID", "Product ID",
-                    "Quantity", "Price");
+            System.out.print("-------------------------------------------------------------------------------------" +
+                    "---------------------\n");
+            System.out.printf("| " + PURPLE_BOLD + "%-25s" + ANSI_RESET + " | "
+                            + PURPLE_BOLD + "%-20s" + ANSI_RESET + " | "
+                            + PURPLE_BOLD + "%-15s" + ANSI_RESET + " | "
+                            + PURPLE_BOLD + "%-15s" + ANSI_RESET + " | "
+                            + PURPLE_BOLD + "%-15s" + ANSI_RESET + " |\n",
+                    "Bill Detail ID", "Bill ID", "Product ID", "Quantity", "Price");
             billDetailListUpdate.stream().forEach(BillDetail::displayData);
+            System.out.print("-------------------------------------------------------------------------------------" +
+                    "---------------------\n");
             // update each receipt detail
             int countBillDetail = 1;
             for (BillDetail billDetail : billDetailListUpdate) {
-                System.out.println("-----------------Update Receipt Detail Number " + countBillDetail +
-                        "------------------");
+                System.out.println("-----------------" + ANSI_GREEN + "Update Receipt Detail Number " + ANSI_RESET
+                        + ANSI_PURPLE + countBillDetail + ANSI_RESET + "------------------");
                 // get product list to update product ID
                 List<Product> productList = ProductBusiness.getOriginalProduct();
-                System.out.println("------------Product List-----------");
+                System.out.println("------------" + ANSI_GREEN + "Product List" + ANSI_RESET + "-----------");
                 for (int i = 0; i < productList.size(); i++) {
                     System.out.println((i + 1) + ". " + productList.get(i).getProductName());
                 }
@@ -334,9 +380,23 @@ public class WarehouseManagementForUser {
             int billId = Integer.parseInt(input.nextLine());
             List<Bill> searchReceiptList = UserBusiness.searchBillForUser(billId);
             if (searchReceiptList.size() != 0) {
-                System.out.printf("%-15s%-20s%-15s%-20s%-20s%-20s%-25s%-15s\n", "Receipt ID", "Receipt Code", "Type",
-                        "Created Employee", "Created Date", "Authorized Employee", "Authorized Date", "Receipt Status");
+                System.out.print("---------------------------------------------------------------------------------" +
+                        "---------------------------------------------------------------------------------------" +
+                        "-------\n");
+                System.out.printf("| " + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-20s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | "
+                                + ANSI_PURPLE + "%-15s" + ANSI_RESET + " |\n",
+                        "Bill ID", "Bill Code", "Type", "Created Employee", "Created Date", "Authorized Employee",
+                        "Authorized Date", "Bill Status");
                 searchReceiptList.stream().forEach(Bill::displayData);
+                System.out.print("---------------------------------------------------------------------------------" +
+                        "---------------------------------------------------------------------------------------" +
+                        "-------\n");
             } else {
                 System.err.println("There is no receipt whose ID matches with the inputted data!");
                 System.out.println("On the other hand, you are using account for user so the result may be limited!");

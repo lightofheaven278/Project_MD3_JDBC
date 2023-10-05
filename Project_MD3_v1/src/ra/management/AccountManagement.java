@@ -9,6 +9,20 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AccountManagement {
+    /**
+     * Text color
+     */
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+
+    /**
+     * Bold format
+     */
+    public static final String PURPLE_BOLD = "\033[1;35m"; // PURPLE
+
     public static Scanner input = new Scanner(System.in);
     public static List<Account> accountList = AccountBusiness.getAllAccounts();
 
@@ -16,7 +30,8 @@ public class AccountManagement {
         boolean checkOutAccount = true;
         do {
             accountList = AccountBusiness.getAllAccounts();
-            System.out.println("-----------------------ACCOUNT MANAGEMENT----------------------");
+            System.out.println("-----------------------" + PURPLE_BOLD + "ACCOUNT MANAGEMENT" + ANSI_RESET
+                    + "----------------------");
             System.out.println("1. Display all accounts");
             System.out.println("2. Add new account");
             System.out.println("3. Update account status");
@@ -54,15 +69,24 @@ public class AccountManagement {
     }
 
     public static void displayAllAccounts() {
-        System.out.printf("%-15s%-25s%-25s%-15s%-15s%-15s\n", "Account ID", "User Name", "Password", "Permission",
-                "Employee ID", "Account Status");
+        System.out.print("--------------------------------------------------------------------------------------" +
+                "-------------------------------------------\n");
+        System.out.printf("| " + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                        + ANSI_PURPLE + "%-15s" + ANSI_RESET + " |\n",
+                "Account ID", "User Name", "Password", "Permission", "Employee ID", "Account Status");
         accountList.stream().forEach(Account::displayData);
+        System.out.print("--------------------------------------------------------------------------------------" +
+                "-------------------------------------------\n");
     }
 
     public static void addNewAccount() {
         Account account = new Account();
         List<Employee> originalEmployeeList = EmployeeBusiness.getAllEmployeesInfo();
-        System.out.println("------------------Employee List----------------");
+        System.out.println("------------------" + ANSI_GREEN + "Employee List" + ANSI_RESET + "----------------");
         for (int i = 0; i < originalEmployeeList.size(); i++) {
             System.out.println((i + 1) + ". " + originalEmployeeList.get(i).getEmpName());
         }
@@ -105,9 +129,18 @@ public class AccountManagement {
         String keyword = input.nextLine();
         List<Account> accountListSearch = AccountBusiness.searchAccount(keyword);
         if (accountListSearch.size() != 0) {
-            System.out.printf("%-15s%-25s%-25s%-15s%-15s%-15s\n", "Account ID", "User Name", "Password", "Permission",
-                    "Employee ID", "Account Status");
+            System.out.print("--------------------------------------------------------------------------------------" +
+                    "-------------------------------------------\n");
+            System.out.printf("| " + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                            + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | "
+                            + ANSI_PURPLE + "%-25s" + ANSI_RESET + " | "
+                            + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                            + ANSI_PURPLE + "%-15s" + ANSI_RESET + " | "
+                            + ANSI_PURPLE + "%-15s" + ANSI_RESET + " |\n",
+                    "Account ID", "User Name", "Password", "Permission", "Employee ID", "Account Status");
             accountListSearch.stream().forEach(Account::displayData);
+            System.out.print("--------------------------------------------------------------------------------------" +
+                    "-------------------------------------------\n");
             System.out.println("Do you wanna change the status of account?");
             System.out.println("1. Yes              2. No");
             System.out.println("Please choose number representing your request:");
