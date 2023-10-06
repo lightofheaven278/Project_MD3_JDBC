@@ -76,33 +76,41 @@ public class EmployeeManagement {
             try {
                 System.out.println("Please input data per page you wanna see:");
                 int dataPerPage = Integer.parseInt(input.nextLine());
-                System.out.println("Please input starting data:");
-                int startData = Integer.parseInt(input.nextLine());
-                List<Employee> employeeList = EmployeeBusiness.getEmployeesInfo(dataPerPage, startData);
-                System.out.print("--------------------------------------------------------------------------------" +
-                        "-----------------------------------------------------------------------------------------" +
-                        "--------\n");
-                System.out.printf("| " + PURPLE_BOLD + "%-15s" + ANSI_RESET +
-                                " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
-                                " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
-                                " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
-                                " | " + PURPLE_BOLD + "%-20s" + ANSI_RESET +
-                                " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
-                                " | " + PURPLE_BOLD + "%-20s" + ANSI_RESET + " |\n",
-                        "Employee ID", "Employee Name", "Birthday", "Email", "Phone", "Address", "Employee Status");
-                employeeList.stream().forEach(employee -> employee.displayData());
-                System.out.print("--------------------------------------------------------------------------------" +
-                        "-----------------------------------------------------------------------------------------" +
-                        "--------\n");
-                int remainingProducts = originalEmployeeList.size() - (dataPerPage + startData);
-                System.out.print("The remaining employees is: ");
-                System.out.println(remainingProducts);
-                System.out.println("Please choose the number below if you wanna see the remaining of data ↓");
-                System.out.println("1. Yes                 2. No");
-                int choice = Integer.parseInt(input.nextLine());
-                if (choice != 1) {
-                    checkOutDisplay = false;
+                if (dataPerPage <= 10) {
+                    System.out.println("Please input starting data:");
+                    int startData = Integer.parseInt(input.nextLine());
+                    List<Employee> employeeList = EmployeeBusiness.getEmployeesInfo(dataPerPage, startData);
+                    System.out.print("--------------------------------------------------------------------------------" +
+                            "-----------------------------------------------------------------------------------------" +
+                            "--------\n");
+                    System.out.printf("| " + PURPLE_BOLD + "%-15s" + ANSI_RESET +
+                                    " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
+                                    " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
+                                    " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
+                                    " | " + PURPLE_BOLD + "%-20s" + ANSI_RESET +
+                                    " | " + PURPLE_BOLD + "%-25s" + ANSI_RESET +
+                                    " | " + PURPLE_BOLD + "%-20s" + ANSI_RESET + " |\n",
+                            "Employee ID", "Employee Name", "Birthday", "Email", "Phone", "Address", "Employee Status");
+                    employeeList.stream().forEach(Employee::displayData);
+                    System.out.print("--------------------------------------------------------------------------------" +
+                            "-----------------------------------------------------------------------------------------" +
+                            "--------\n");
+                    int remainingProducts = originalEmployeeList.size() - (dataPerPage + startData);
+                    if (remainingProducts < 0) {
+                        remainingProducts = 0;
+                    }
+                    System.out.print("The remaining employees is: ");
+                    System.out.println(remainingProducts);
+                    System.out.println("Please choose the number below if you wanna see the remaining of data ↓");
+                    System.out.println("1. Yes                 2. No");
+                    int choice = Integer.parseInt(input.nextLine());
+                    if (choice != 1) {
+                        checkOutDisplay = false;
+                    }
+                } else {
+                    System.out.println(ANSI_RED + "Data per page is limited by 10!" + ANSI_RESET);
                 }
+
             } catch (NumberFormatException ex) {
                 System.err.println("The inputted number does not have an integer format! " + ex.getMessage());
             } catch (Exception e) {
@@ -127,7 +135,7 @@ public class EmployeeManagement {
         String employeeId = input.nextLine();
         Employee employee = EmployeeBusiness.getEmployeeById(employeeId);
         if (employee != null) {
-            employee.setEmpName(employee.validateEmpName(input, originalEmployeeList));
+            employee.setEmpName(employee.validateEmpNameForUpdate(input, originalEmployeeList, employeeId));
             employee.setBirthday(employee.validateBirthday(input));
             employee.setEmail(employee.validateEmail(input));
             employee.setPhoneNum(employee.validatePhone(input));
@@ -154,7 +162,7 @@ public class EmployeeManagement {
             System.out.println("0. Active");
             System.out.println("1. Paid leave");
             System.out.println("2. Resign");
-            System.out.println("Please choose number representing status of product(1 or 2):");
+            System.out.println("Please choose number representing status of product(0~2):");
             try {
                 int choice = Integer.parseInt(input.nextLine());
                 switch (choice) {

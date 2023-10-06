@@ -85,15 +85,15 @@ public class AccountManagement {
 
     public static void addNewAccount() {
         Account account = new Account();
-        List<Employee> originalEmployeeList = EmployeeBusiness.getAllEmployeesInfo();
+        List<Employee> empNonAccList = AccountBusiness.getEmployeeNonAccList();
         System.out.println("------------------" + ANSI_GREEN + "Employee List" + ANSI_RESET + "----------------");
-        for (int i = 0; i < originalEmployeeList.size(); i++) {
-            System.out.println((i + 1) + ". " + originalEmployeeList.get(i).getEmpName());
+        for (int i = 0; i < empNonAccList.size(); i++) {
+            System.out.println((i + 1) + ". " + empNonAccList.get(i).getEmpName());
         }
         System.out.println("Please input the number representing employee you wanna create an account for:");
         try {
             int choiceEmp = Integer.parseInt(input.nextLine());
-            account.setEmpId(originalEmployeeList.get(choiceEmp - 1).getEmpId());
+            account.setEmpId(empNonAccList.get(choiceEmp - 1).getEmpId());
             account.inputData(input, accountList);
             boolean addNewAccountResult = AccountBusiness.addNewAccount(account);
             if (addNewAccountResult) {

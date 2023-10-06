@@ -34,6 +34,8 @@ public class AccountBusiness {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            ConnectionDB.closeConnection(con,callSt);
         }
         return accountList;
     }
@@ -149,5 +151,33 @@ public class AccountBusiness {
             ConnectionDB.closeConnection(con, callSt);
         }
         return result;
+    }
+
+    public static List<Employee> getEmployeeNonAccList() {
+        Connection con = null;
+        CallableStatement callSt = null;
+        List<Employee> empNonAccList = null;
+        try {
+            con = ConnectionDB.openConnection();
+            callSt = con.prepareCall("{call get_emp_non_acc()}");
+            ResultSet rs = callSt.executeQuery();
+            empNonAccList = new ArrayList<>();
+            while (rs.next()) {
+                Employee employee = new Employee();
+                employee.setEmpId(rs.getString("emp_id"));
+                employee.setEmpName(rs.getString("emp_name"));
+                employee.setBirthday(rs.getString("birth_of_date"));
+                employee.setEmail(rs.getString("email"));
+                employee.setPhoneNum(rs.getString("phone"));
+                employee.setAddress(rs.getString("address"));
+                employee.setEmpStatus(rs.getInt("emp_status"));
+                empNonAccList.add(employee);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionDB.closeConnection(con, callSt);
+        }
+        return empNonAccList;
     }
 }

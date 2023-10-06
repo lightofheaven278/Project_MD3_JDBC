@@ -170,6 +170,39 @@ public class Employee {
         } while (true);
     }
 
+    public String validateEmpNameForUpdate(Scanner input, List<Employee> employeeList, String empId) {
+        System.out.println("Please input the name of employee:");
+        do {
+            String empName = input.nextLine();
+            if (!empName.trim().equals("")) {
+                if (empName.trim().length() <= 100) {
+                    if (employeeList.size() == 0) {
+                        return empName;
+                    } else {
+                        boolean checkEmpName = false;
+                        for (Employee emp : employeeList) {
+                            if (!emp.getEmpId().equals(empId)) {
+                                if (empName.trim().equals(emp.getEmpName().trim())) {
+                                    checkEmpName = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!checkEmpName) {
+                            return empName;
+                        } else {
+                            System.err.println("The inputted employee name already existed! Please try another.");
+                        }
+                    }
+                } else {
+                    System.err.println("The employee name should contain less than 100 characters!");
+                }
+            } else {
+                System.err.println("The employee name should not be a blank!");
+            }
+        } while (true);
+    }
+
     public String validateBirthday(Scanner input) {
         System.out.println("Please input employee's date of birth:");
         do {
@@ -261,7 +294,7 @@ public class Employee {
         System.out.print("--------------------------------------------------------------------------------" +
                 "-----------------------------------------------------------------------------------------" +
                 "--------\n");
-        System.out.printf("| %-15s | %-25s | %-25s | %-25s | %-20s | %-25s | %-20s |\n", this.empId, this.empName, this.birthday,
-                this.email, this.phoneNum, this.address, status);
+        System.out.printf("| %-15s | %-25s | %-25s | %-25s | %-20s | %-25s | %-20s |\n", this.empId, this.empName,
+                this.birthday, this.email, this.phoneNum, this.address, status);
     }
 }

@@ -76,31 +76,38 @@ public class ProductManagement {
             try {
                 System.out.println("Please input data per page you wanna see:");
                 int dataPerPage = Integer.parseInt(input.nextLine());
-                System.out.println("Please input starting data:");
-                int startData = Integer.parseInt(input.nextLine());
-                List<Product> productList = ProductBusiness.getAllProduct(dataPerPage, startData);
-                System.out.print("--------------------------------------------------------------------------------" +
-                        "---------------------------------------------------------------------------\n");
-                System.out.printf("| " + ANSI_PURPLE + "%-15s" + ANSI_RESET +
-                                " | " + ANSI_PURPLE + "%-25s" + ANSI_RESET +
-                                " | " + ANSI_PURPLE + "%-25s" + ANSI_RESET +
-                                " | " + ANSI_PURPLE + "%-20s" + ANSI_RESET +
-                                " | " + ANSI_PURPLE + "%-15s" + ANSI_RESET +
-                                " | " + ANSI_PURPLE + "%-15s" + ANSI_RESET +
-                                " | " + ANSI_PURPLE + "%-20s" + ANSI_RESET + " |\n",
-                        "Product ID", "Product Name", "Manufacturer", "Created Date",
-                        "Batch", "Quantity", "Product Status");
-                productList.stream().forEach(Product::displayData);
-                System.out.print("--------------------------------------------------------------------------------" +
-                        "-----------------------------------------------------------------------------\n");
-                int remainingProducts = originalProductList.size() - (dataPerPage + startData);
-                System.out.print("The remaining products is: ");
-                System.out.println(remainingProducts);
-                System.out.println("Please choose the number below if you wanna see the remaining of data ↓");
-                System.out.println("1. Yes                 2. No");
-                int choice = Integer.parseInt(input.nextLine());
-                if (choice != 1) {
-                    checkOutDisplay = false;
+                if (dataPerPage <= 10) {
+                    System.out.println("Please input starting data:");
+                    int startData = Integer.parseInt(input.nextLine());
+                    List<Product> productList = ProductBusiness.getAllProduct(dataPerPage, startData);
+                    System.out.print("--------------------------------------------------------------------------------" +
+                            "---------------------------------------------------------------------------\n");
+                    System.out.printf("| " + ANSI_PURPLE + "%-15s" + ANSI_RESET +
+                                    " | " + ANSI_PURPLE + "%-25s" + ANSI_RESET +
+                                    " | " + ANSI_PURPLE + "%-25s" + ANSI_RESET +
+                                    " | " + ANSI_PURPLE + "%-20s" + ANSI_RESET +
+                                    " | " + ANSI_PURPLE + "%-15s" + ANSI_RESET +
+                                    " | " + ANSI_PURPLE + "%-15s" + ANSI_RESET +
+                                    " | " + ANSI_PURPLE + "%-20s" + ANSI_RESET + " |\n",
+                            "Product ID", "Product Name", "Manufacturer", "Created Date",
+                            "Batch", "Quantity", "Product Status");
+                    productList.stream().forEach(Product::displayData);
+                    System.out.print("--------------------------------------------------------------------------------" +
+                            "-----------------------------------------------------------------------------\n");
+                    int remainingProducts = originalProductList.size() - (dataPerPage + startData);
+                    if (remainingProducts < 0) {
+                        remainingProducts = 0;
+                    }
+                    System.out.print("The remaining products is: ");
+                    System.out.println(remainingProducts);
+                    System.out.println("Please choose the number below if you wanna see the remaining of data ↓");
+                    System.out.println("1. Yes                 2. No");
+                    int choice = Integer.parseInt(input.nextLine());
+                    if (choice != 1) {
+                        checkOutDisplay = false;
+                    }
+                } else {
+                    System.out.println(ANSI_RED + "Data per page is limited by 10!" + ANSI_RESET);
                 }
             } catch (NumberFormatException ex) {
                 System.out.println(ANSI_RED + "The inputted number does not have an integer format! " + ANSI_RESET
@@ -128,7 +135,7 @@ public class ProductManagement {
         String productId = input.nextLine();
         Product product = ProductBusiness.getProductById(productId);
         if (product != null) {
-            product.setProductName(product.validateProductName(input));
+            product.setProductName(product.validateProductNameForUpdate(input, originalProductList, productId));
             product.setManufacturer(product.validateManufacturer(input));
             product.setCreated(product.validateDateCreated(input));
             product.setBatch(product.validateBatch(input));

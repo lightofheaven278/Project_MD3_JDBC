@@ -123,7 +123,7 @@ public class UserBusiness {
         List<Bill> billListListSearch = null;
         try {
             con = ConnectionDB.openConnection();
-            callSt = con.prepareCall("{call search_bill_by_user(?,?)}");
+            callSt = con.prepareCall("{call search_bill_by_user(?)}");
             callSt.setInt(1, billId);
             ResultSet rs = callSt.executeQuery();
             billListListSearch = new ArrayList<>();

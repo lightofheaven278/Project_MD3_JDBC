@@ -291,6 +291,15 @@ end //
 DELIMITER ;
 
 DELIMITER //
+create procedure get_emp_non_acc()
+begin
+select emp_id, emp_name, birth_of_date, email, phone, address, emp_status
+from Employee
+where emp_id not in (select emp.emp_id from Employee as emp inner join Account as acc on emp.emp_id = acc.emp_id);
+end //
+DELIMITER ;
+
+DELIMITER //
 create procedure get_account_by_id(
 acc_id_in int
 )

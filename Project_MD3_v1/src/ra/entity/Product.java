@@ -21,7 +21,7 @@ public class Product {
                    int quantity, boolean productStatus) {
         this.productId = productId;
         this.productName = productName;
-        Manufacturer = manufacturer;
+        this.Manufacturer = manufacturer;
         this.created = created;
         this.batch = batch;
         this.quantity = quantity;
@@ -86,7 +86,7 @@ public class Product {
 
     public void inputData(Scanner input, List<Product> productList) {
         this.productId = validateProductId(input, productList);
-        this.productName = validateProductName(input);
+        this.productName = validateProductName(input, productList);
         this.Manufacturer = validateManufacturer(input);
         this.created = validateDateCreated(input);
         this.batch = validateBatch(input);
@@ -125,18 +125,60 @@ public class Product {
         } while (true);
     }
 
-    public String validateProductName(Scanner input) {
+    public String validateProductName(Scanner input, List<Product> productList) {
         System.out.println("Please input name of product:");
+        boolean checkProductName = false;
         do {
             String productName = input.nextLine();
             if (productName.trim().length() <= 150 && !productName.trim().equals("")) {
-                return productName;
+                if (productList.size() == 0) {
+                    return productName;
+                } else {
+                    for (Product product : productList) {
+                        if (product.getProductName().equals(productName)) {
+                            checkProductName = true;
+                            break;
+                        }
+                    }
+                    if (!checkProductName) {
+                        return productName;
+                    }
+                }
             } else {
                 System.err.println("The product name should not be a blank and contains less than or " +
                         "equal 150 character");
             }
         } while (true);
     }
+
+    public String validateProductNameForUpdate(Scanner input, List<Product> productList, String productId) {
+        System.out.println("Please input name of product:");
+        boolean checkProductName = false;
+        do {
+            String productName = input.nextLine();
+            if (productName.trim().length() <= 150 && !productName.trim().equals("")) {
+                if (productList.size() == 0) {
+                    return productName;
+                } else {
+                    for (Product product : productList) {
+                        if (!product.getProductId().equals(productId)) {
+                            if (product.getProductName().equals(productName)) {
+                                checkProductName = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!checkProductName) {
+                        return productName;
+                    }
+                }
+            } else {
+                System.err.println("The product name should not be a blank and contains less than or " +
+                        "equal 150 character");
+            }
+        } while (true);
+    }
+
 
     public String validateManufacturer(Scanner input) {
         System.out.println("Please input name of manufacturer:");
